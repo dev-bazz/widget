@@ -11,8 +11,7 @@ get_template().then((e) => {
       .addEventListener("click", async function (e) {
         e.preventDefault();
 
-          // Get the data-attribute value from the script element
-  const dataAttribute = document.currentScript.dataset.widgetType;
+ 
   
         // Form data extraction
         const firstName = document.getElementById('firstName').value;
