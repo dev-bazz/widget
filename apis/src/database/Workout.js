@@ -1,43 +1,30 @@
 // const DB = require("./db.json");
 // const { saveToDatabase } = require("./utils");
-
+const { connectMongoDB } = require("../libs/mongodb");
 const Topic = require("../models/index");
 
-const createNewRecord = async (request) => {
+const createNewRecord = async (request, response) => {
   try {
-    // const { name, email, message } = await request;
-    console.log("FORM DATA: ", name, email, message);
-    const { name, email,message } = await request.json();
-    // await connectMongoDB();
-    // const topic = await Topic.findOne({ name });
-    // if (topic?.name === name) {
-    //   return NextResponse.json(
-    //     { message: "Name already exists" },
-    //     { status: 409 }
-    //   );
-    // } else {
-    //   await Topic.create({ name, email, message });
-    //   return NextResponse.json({ message: "Record created" }, { status: 201 });
-    // }
+    const client = await connectMongoDB();
+    const db = client.db("users");
+    const ping = await db.command({ping: 1})
+    
+    const users = await db.collection("users").insertOne({
+      ...request
+     
+    });
+
+    // console.log(users)
+
+    console.log(response);
+
+    // return response.status(200).json({ message: "Record added successfully" });
   } catch (error) {
-    console.log("THIS IS THE ERROR: ", error);
-    throw { status: error?.status || 500, message: error?.message || error };
+    console.log("Error:", error);
+  } finally {
+    const client = await connectMongoDB();
+    await client.close();
   }
-  // try {
-  //   const isAlreadyAdded =
-  //     DB.records.findIndex((record) => record.name === newRecord.name) > -1;
-  //   if (isAlreadyAdded) {
-  //     throw {
-  //       status: 400,
-  //       message: `Record with the name '${newRecord.name}' already exists`,
-  //     };
-  //   }
-  //   DB.records.push(newRecord);
-  //   saveToDatabase(DB);
-  //   return newRecord;
-  // } catch (error) {
-  //   throw { status: error?.status || 500, message: error?.message || error };
-  // }
 };
 
 module.exports = {

@@ -56,7 +56,7 @@ const createNewRecord = (req, res) => {
   const newRecord = {
     name: body.name,
     email: body.email,
-    messgae: body.messgae,
+    message: body.message,
   };
   try {
     const createdRecord = recordService2.createRecord(newRecord);
