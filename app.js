@@ -3,13 +3,13 @@ const bodyParser = require('body-parser');
 const { MongoClient } = require('mongodb');
 
 const app = express();
-const PORT = 5805;
+const PORT = 27017;
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // MongoDB Connection
-const client = new MongoClient('mongodb://localhost:5808');
+const client = new MongoClient('mongodb://localhost:27017?directConnection=true', { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect();
 
 // Routes

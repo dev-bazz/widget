@@ -1,10 +1,16 @@
 // importing the MongoDB driver
-const { MongoClient } = require('mongodb');
+// const { MongoClient } = require('mongodb');
 
-// My Connection to MongoDB
-const uri = 'mongodb://localhost:5808'; // We will Update with our MongoDB connection string
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// // My Connection to MongoDB
+// const uri = 'mongodb://localhost:27017?directConnection=true'; // We will Update with our MongoDB connection string
+// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
   
+
+// =====================
+// FOLLOW MY COMMENTS TO UNDERSTAND THE CODE
+// =====================
+
+
 // inserting Template
 get_template().then((e) => {
     const t_form = e.querySelector("#form_template");
@@ -63,8 +69,8 @@ get_template().then((e) => {
           }
 
           await client.connect(); // Connect to MongoDB
-          const database = client.db('your_database_name'); // Replace 'your_database_name' with your database name
-          const collection = database.collection('your_collection_name'); // Replace 'your_collection_name' with your collection name
+          const database = client.db('your_database_name'); // Replace 'this' with your database name
+          const collection = database.collection('your_collection_name'); // Replace 'this' with your collection name
           
           // Insert payload into MongoDB collection
           const result = await collection.insertOne(payload);
