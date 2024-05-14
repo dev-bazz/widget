@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="http://localhost:27017/submit-form" id="hbForm" method="post">
+        <div class="form_input">
+            <label for="first name">Name</label>
+            <input name="name" id="name" type="text">
+          </div>
+        
+           <div class="form_input">
+            <label for="email">Email</label>
+            <input name="email" id="email" type="email">
+          </div>
+      
+          <div class="form_input">
+            <label for="Password">Message</label>
+            <textarea id="message" name="message" rows="4" cols="50" required></textarea><br>
+          </div>
+          <button class="btn-submit" type="submit">Submit</button>
+    </form>
+
+    <script src="index.js"></script>
+    
+</body>
+</html>
