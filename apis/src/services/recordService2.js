@@ -1,11 +1,11 @@
 // receiving from the DB dir
 // pretty much receiving the state of the database and sending it
 const { v4: uuid } = require("uuid");
-const Record = require("../database/Record");
-import connectMongoDB from "../libs/mongodb";
+const Record = require("../database/Workout");
+const { connectMongoDB } = require("../libs/mongodb");
 
-const createRecord = (newRecord) => {
-  const yes = connectMongoDB();
+const createRecord = async (newRecord) => {
+  // const yes = await connectMongoDB();
 
   const recordToInsert = {
     ...newRecord,
@@ -14,11 +14,13 @@ const createRecord = (newRecord) => {
     updatedAt: new Date().toLocaleString("en-US", { timeZone: "UTC" }),
   };
   try {
-    const createdRecord = Record.createRecord(recordToInsert);
+    const createdRecord = Record.createNewRecord(recordToInsert);
     return createdRecord;
 
   } catch (error) {
-    throw error;
+    console.log("Errrriygvjhvk", error);
+    throw "Errr", error;
+    
   }
 };
 

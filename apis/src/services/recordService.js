@@ -8,4 +8,13 @@ const getRecordForRecord = (recordId) => {
     throw error;
   }
 };
-module.exports = { getRecordForRecord };
+
+const getAllRecords = () => {
+  try {
+    const allWorkouts = Record.getAllWorkouts();
+    return allWorkouts;
+  } catch (error) {
+    throw error;
+  }
+}
+module.exports = { getRecordForRecord, getAllRecords };
