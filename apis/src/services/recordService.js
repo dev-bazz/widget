@@ -1,11 +1,11 @@
 const Record = require("../database/Record");
 
-const getRecordForWorkout = (workoutId) => {
+const getRecordForRecord = (recordId) => {
   try {
-    const record = Record.getRecordForWorkout(workoutId);
+    const record = Record.getRecordForRecord(recordId);
     return record;
   } catch (error) {
     throw error;
   }
 };
-module.exports = { getRecordForWorkout };
+module.exports = { getRecordForRecord };

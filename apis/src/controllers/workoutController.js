@@ -1,9 +1,9 @@
-const workoutService = require("../services/workoutService");
+const recordService = require("../services/recordService");
 
-const getAllWorkouts = (req, res) => {
+const getAllRecords = (req, res) => {
   try {
-    const allWorkouts = workoutService.getAllWorkouts();
-    res.send({ status: "OK", data: allWorkouts });
+    const allRecords = recordService.getAllRecords();
+    res.send({ status: "OK", data: allRecords });
   } catch (error) {
     res
       .status(error?.status || 500)
@@ -11,21 +11,21 @@ const getAllWorkouts = (req, res) => {
   }
 };
 
-const getOneWorkout = (req, res) => {
+const getOneRecord = (req, res) => {
   const {
-    params: { workoutId },
+    params: { recordId },
   } = req;
-  if (!workoutId) {
+  if (!recordId) {
     res
       .status(400)
       .send({
         status: "FAILED",
-        data: { error: "Parameter ':workoutId' can not be empty" },
+        data: { error: "Parameter ':recordId' can not be empty" },
       });
   }
   try {
-    const workout = workoutService.getOneWorkout(workoutId);
-    res.send({ status: "OK", data: workout });
+    const record = recordService.getOneRecord(recordId);
+    res.send({ status: "OK", data: record });
   } catch (error) {
     res
       .status(error?.status || 500)
@@ -33,7 +33,7 @@ const getOneWorkout = (req, res) => {
   }
 };
 
-const createNewWorkout = (req, res) => {
+const createNewRecord = (req, res) => {
   const { body } = req;
   if (
     !body.name ||
@@ -53,7 +53,7 @@ const createNewWorkout = (req, res) => {
       });
     return;
   }
-  const newWorkout = {
+  const newRecord = {
     name: body.name,
     mode: body.mode,
     equipment: body.equipment,
@@ -61,8 +61,8 @@ const createNewWorkout = (req, res) => {
     trainerTips: body.trainerTips,
   };
   try {
-    const createdWorkout = workoutService.createNewWorkout(newWorkout);
-    res.status(201).send({ status: "OK", data: createdWorkout });
+    const createdRecord = recordService.createNewRecord(newRecord);
+    res.status(201).send({ status: "OK", data: createdRecord });
   } catch (error) {
     res
       .status(error?.status || 500)
@@ -70,22 +70,22 @@ const createNewWorkout = (req, res) => {
   }
 };
 
-const updateOneWorkout = (req, res) => {
+const updateOneRecord = (req, res) => {
   const {
     body,
-    params: { workoutId },
+    params: { recordId },
   } = req;
-  if (!workoutId) {
+  if (!recordId) {
     res
       .status(400)
       .send({
         status: "FAILED",
-        data: { error: "Parameter ':workoutId' can not be empty" },
+        data: { error: "Parameter ':recordId' can not be empty" },
       });
   }
   try {
-    const updatedWorkout = workoutService.updateOneWorkout(workoutId, body);
-    res.send({ status: "OK", data: updatedWorkout });
+    const updatedRecord = recordService.updateOneRecord(recordId, body);
+    res.send({ status: "OK", data: updatedRecord });
   } catch (error) {
     res
       .status(error?.status || 500)
@@ -93,20 +93,20 @@ const updateOneWorkout = (req, res) => {
   }
 };
 
-const deleteOneWorkout = (req, res) => {
+const deleteOneRecord = (req, res) => {
   const {
-    params: { workoutId },
+    params: { recordId },
   } = req;
-  if (!workoutId) {
+  if (!recordId) {
     res
       .status(400)
       .send({
         status: "FAILED",
-        data: { error: "Parameter ':workoutId' can not be empty" },
+        data: { error: "Parameter ':recordId' can not be empty" },
       });
   }
   try {
-    workoutService.deleteOneWorkout(workoutId);
+    recordService.deleteOneRecord(recordId);
     res.status(204).send({ status: "OK" });
   } catch (error) {
     res
@@ -116,9 +116,9 @@ const deleteOneWorkout = (req, res) => {
 };
 
 module.exports = {
-  getAllWorkouts,
-  getOneWorkout,
-  createNewWorkout,
-  updateOneWorkout,
-  deleteOneWorkout,
+  getAllRecords,
+  getOneRecord,
+  createNewRecord,
+  updateOneRecord,
+  deleteOneRecord,
 };                                                                                                                                                                                                                                                                                                                                                                                                                                  

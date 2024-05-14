@@ -1,62 +1,27 @@
 // receiving from the DB dir
-// pretty much receiving teh state of teh database and sending it
+// pretty much receiving the state of the database and sending it
 const { v4: uuid } = require("uuid");
-const Workout = require("../database/Workout");
+const Record = require("../database/Record");
+import connectMongoDB from "../libs/mongodb";
 
-const getAllWorkouts = () => {
-  try {
-    const allWorkouts = Workout.getAllWorkouts();
-    return allWorkouts;
-  } catch (error) {
-    throw error;
-  }
-};
+const createRecord = (newRecord) => {
+  const yes = connectMongoDB();
 
-const getOneWorkout = (workoutId) => {
-  try {
-    const workout = Workout.getOneWorkout(workoutId);
-    return workout;
-  } catch (error) {
-    throw error;
-  }
-};
-
-const createNewWorkout = (newWorkout) => {
-  const workoutToInsert = {
-    ...newWorkout,
+  const recordToInsert = {
+    ...newRecord,
     id: uuid(),
     createdAt: new Date().toLocaleString("en-US", { timeZone: "UTC" }),
     updatedAt: new Date().toLocaleString("en-US", { timeZone: "UTC" }),
   };
   try {
-    const createdWorkout = Workout.createNewWorkout(workoutToInsert);
-    return createdWorkout;
-  } catch (error) {
-    throw error;
-  }
-};
+    const createdRecord = Record.createRecord(recordToInsert);
+    return createdRecord;
 
-const updateOneWorkout = (workoutId, changes) => {
-  try {
-    const updatedWorkout = Workout.updateOneWorkout(workoutId, changes);
-    return updatedWorkout;
-  } catch (error) {
-    throw error;
-  }
-};
-
-const deleteOneWorkout = (workoutId) => {
-  try {
-    Workout.deleteOneWorkout(workoutId);
   } catch (error) {
     throw error;
   }
 };
 
 module.exports = {
-  getAllWorkouts,
-  getOneWorkout,
-  createNewWorkout,
-  updateOneWorkout,
-  deleteOneWorkout,
+  createRecord,
 };
