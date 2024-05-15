@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Form</title>
+  </head>
+  <body>
+    <style>
+      section {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        /* width: 100vh; */
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      form {
+        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+        padding: 20px;
+        border-radius: 10px;
+      }
+
+      input,
+      textarea {
+        width: 300px;
+        height: 30px;
+        border: none;
+        background: rgb(243, 243, 243);
+        border-radius: 5px;
+        padding: 4px 10px;
+      }
+
+      button {
+        border: 1px solid green;
+        background-color: green;
+        color: white;
+        width: 100%;
+        padding: 10px;
+        border-radius: 4px;
+      }
+      label {
+        font-size: 0.7rem;
+        color: rgb(181, 175, 175);
+        margin-bottom: 6px;
+      }
+    </style>
+    <section>
+      <h2>Add User Form</h2>
+       <span id="errorMessage" style="color: red"></span>
+       <span id="successMessage" style="color: green"></span>
+      <form id="contactForm">
+        <label for="name">Name:</label><br />
+        <input type="text" id="name" name="name" required /><br /><br />
+
+        <label for="email">Email:</label><br />
+        <input type="email" id="email" name="email" required /><br /><br />
+
+        <label for="message">Message:</label><br />
+        <textarea id="message" name="message" required></textarea><br /><br />
+
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+   
+
+    <script>
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // prevent the form from submitting via the browser
+
+          var formData = new FormData(this);
+          var jsonObject = {};
+          formData.forEach(function (value, key) {
+            jsonObject[key] = value;
+          });
+
+          fetch("http://localhost:3000/api/v1/records/create", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jsonObject),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Unsuccessfull Submission");
+              }
+              return response.text();
+            })
+            .then((data) => {
+              console.log(data);
+              document.getElementById("successMessage").textContent =("Form submitted successfully!");
+              document.getElementById("contactForm").reset(); // Reset the form after successful submission
+              document.getElementById("errorMessage").textContent = "";
+              
+              setTimeout(() => {
+                document.getElementById("successMessage").textContent = "";
+              }, 5000)
+              // Clear any previous error messages
+            })
+            .catch((error) => {
+              console.error(
+                "There has been a problem with your fetch operation:",
+                error
+              );
+              document.getElementById("errorMessage").textContent =
+                "Error: " + error.message; // Display the error message in the span
+            });
+        });
+    </script>
+  </body>
+</html>
