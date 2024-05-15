@@ -2,7 +2,6 @@
 // pretty much receiving the state of the database and sending it
 const { v4: uuid } = require("uuid");
 const Record = require("../database/Workout");
-const { connectMongoDB } = require("../libs/mongodb");
 
 const createRecord = async (newRecord) => {
   // const yes = await connectMongoDB();
